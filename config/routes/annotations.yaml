@@ -1,5 +1,13 @@
-controllers:
-    resource: ../../src/Controller/
+product_controllers:
+    resource: ../../src/Product/UserInterface/Http
+    type: annotation
+
+catalog_controllers:
+    resource: ../../src/Catalog/UserInterface/Http
+    type: annotation
+
+cart_controllers:
+    resource: ../../src/Cart/UserInterface/Http
     type: annotation
 
 kernel:
