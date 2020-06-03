@@ -75,6 +75,6 @@ class CatalogReadModelListener {
         $catalog->setProduct($productModel);
         $catalog->setProductName($product->getProductName()->getName());
         $catalog->setProductPrice($product->getProductPrice()->getPrice()->getAmount());
-        $catalog->setCurrency($product->getProductPrice()->getPrice()->getCurrency());
+        $catalog->setCurrency($product->getProductPrice()->getPrice()->getCurrency()->getCode());
     }
 }

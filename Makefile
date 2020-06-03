@@ -6,8 +6,14 @@ build:
 	docker build . -t $(NAME):$(VERSION) --rm
 	docker tag $(NAME):$(VERSION) $(NAME):latest
 
+.PHONY: start-server
+start-server:
+	docker-compose up -d
+
 .PHONY: install
 install:
-	docker-compose up -d
 	docker exec -i shopping_cart_application_php_1 bash -c '/var/www/html/install.sh'
-	docker-compose down
+
+.PHONY: test
+test:
+	docker exec -i shopping_cart_application_php_1 bash -c '/var/www/html/vendor/phpunit/phpunit/phpunit --configuration /var/www/html/phpunit.xml.dist /var/www/html/tests'

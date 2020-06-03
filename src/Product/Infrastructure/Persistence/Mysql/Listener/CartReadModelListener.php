@@ -64,6 +64,6 @@ class CartReadModelListener {
 
         $cart->setProductName($product->getProductName()->getName());
         $cart->setProductPrice($product->getProductPrice()->getPrice()->getAmount());
-        $cart->setCurrency($product->getProductPrice()->getPrice()->getCurrency());
+        $cart->setCurrency($product->getProductPrice()->getPrice()->getCurrency()->getCode());
     }
 }
