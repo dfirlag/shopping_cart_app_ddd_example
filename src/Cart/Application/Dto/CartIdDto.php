@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cart\Application\Dto;
+namespace App\Cart\Application\Dto;
 
 /**
  * Class CartIdDto

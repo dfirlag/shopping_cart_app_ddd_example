@@ -7,6 +7,11 @@ namespace App\Shared\UserInterface\Http;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class AbstractController
+ *
+ * @package App\Shared\UserInterface\Http
+ */
 class AbstractController {
 
     /**

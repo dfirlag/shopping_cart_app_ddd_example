@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace App\Catalog\Application;
 
+use App\Catalog\Domain\Catalog\Event\ProductAddedToCatalogEvent;
+use App\Catalog\Domain\Catalog\Event\ProductRemovedFromCatalogEvent;
 use App\Catalog\Domain\Catalog\Factory\CatalogFactory;
 use App\Catalog\Domain\Catalog\ValueObject\CatalogId;
-use App\Catalog\Domain\Catalog\ValueObject\ProductId;
+use App\Shared\Application\Event\EventDispatcher;
+use App\Shared\Domain\ValueObject\ProductId;
 use App\Catalog\Infrastructure\Persistence\Mysql\Repository\CatalogRepository;
 
+/**
+ * Class CatalogCommandService
+ *
+ * @package App\Catalog\Application
+ */
 class CatalogCommandService {
 
     /**
@@ -17,12 +25,19 @@ class CatalogCommandService {
     private $catalogRepository;
 
     /**
+     * @var EventDispatcher
+     */
+    private $eventDispatcher;
+
+    /**
      * CatalogCommandService constructor.
      *
      * @param CatalogRepository $catalogRepository
+     * @param EventDispatcher   $eventDispatcher
      */
-    public function __construct(CatalogRepository $catalogRepository) {
+    public function __construct(CatalogRepository $catalogRepository, EventDispatcher $eventDispatcher) {
         $this->catalogRepository = $catalogRepository;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -37,7 +52,12 @@ class CatalogCommandService {
 
         $catalog->getProductCollection()->addProductId($productId);
 
+        // start transaction
         $this->catalogRepository->saveCatalog($catalog);
+        $this->eventDispatcher->dispatch(
+            new ProductAddedToCatalogEvent($catalogId->getId(), $catalog->getCatalogName()->getName(), $productId),
+            ProductAddedToCatalogEvent::NAME);
+        // end transaction
     }
 
     /**
@@ -53,5 +73,9 @@ class CatalogCommandService {
         $catalog->getProductCollection()->removeProductId($productId);
 
         $this->catalogRepository->saveCatalog($catalog);
+        $this->eventDispatcher->dispatch(
+            new ProductRemovedFromCatalogEvent($catalogId->getId(), $productId),
+            ProductRemovedFromCatalogEvent::NAME
+        );
     }
 }

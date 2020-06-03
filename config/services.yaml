@@ -29,6 +29,7 @@ services:
         resource: '../src/Cart/UserInterface/Http'
         tags: ['controller.service_arguments']
 
+    # command handlers
     App\Product\Application\CommandHandler\:
         resource: '../src/Product/Application/CommandHandler/*'
         tags: ['messenger.message_handler']
@@ -39,9 +40,32 @@ services:
         resource: '../src/Cart/Application/CommandHandler/*'
         tags: ['messenger.message_handler']
 
-    Product\Infrastructure\Persistence\Mysql\Listener\CartListener:
+    # doctrine listeners
+    App\Product\Infrastructure\Persistence\Mysql\Listener\CartListener:
         tags:
             - { name: doctrine.orm.entity_listener, lazy: true }
+
+    # doctrine listeners
+    App\Product\Infrastructure\Persistence\Mysql\Listener\CartReadModelListener:
+        tags:
+            - { name: doctrine.orm.entity_listener, lazy: true }
+
+    # doctrine listeners
+    App\Product\Infrastructure\Persistence\Mysql\Listener\CatalogReadModelListener:
+        tags:
+            - { name: doctrine.orm.entity_listener, lazy: true }
+
+    # doctrine listeners
+    App\Cart\Infrastructure\Persistence\Mysql\Listener\ProductListener:
+        tags:
+            - { name: doctrine.orm.entity_listener, lazy: true }
+
+    # doctrine listeners
+    App\Catalog\Infrastructure\Persistence\Mysql\Listener\ProductListener:
+        tags:
+            - { name: doctrine.orm.entity_listener, lazy: true }
+
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

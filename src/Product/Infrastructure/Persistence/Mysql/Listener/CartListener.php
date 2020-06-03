@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Product\Infrastructure\Persistence\Mysql\Listener;
+namespace App\Product\Infrastructure\Persistence\Mysql\Listener;
 
 use App\Cart\Infrastructure\Persistence\Mysql\Cart;
 use App\Product\Application\ProductQueryService;
@@ -10,9 +10,7 @@ use App\Product\Infrastructure\Persistence\Mysql\Product;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
-use Doctrine\ORM\Mapping\PrePersist;
-use Doctrine\ORM\Mapping\PreUpdate;
-use Doctrine\ORM\Mapping\PreFlush;
+use Doctrine\ORM\Mapping as ORM;
 
 class CartListener {
 
@@ -31,24 +29,36 @@ class CartListener {
     }
 
     /**
-     * @PrePersist
+     * @ORM\PrePersist
      */
     public function prePersistHandler(Cart $cart, LifecycleEventArgs $event) {
         $this->setProductIdsAndTotalAmount($cart, $event->getEntityManager());
     }
 
     /**
-     * @PreUpdate
+     * @ORM\PreUpdate
      */
     public function preUpdateHandler(Cart $cart, LifecycleEventArgs $event) {
         $this->setProductIdsAndTotalAmount($cart, $event->getEntityManager());
     }
 
     /**
-     * @PreFlush
+     * @ORM\PreFlush
      */
     public function preFlashHandler(Cart $cart, PreFlushEventArgs $event) {
         $this->setProductIdsAndTotalAmount($cart, $event->getEntityManager());
+    }
+
+    /** @ORM\PostLoad */
+    public function postLoadHandler(Cart $cart, LifecycleEventArgs $event)
+    {
+        $productsIds = [];
+        foreach ($cart->getProducts()->getIterator() as $row) {
+            $productsIds[] = $row->getId();
+        }
+
+        $cart->setProductIds($productsIds);
+        $cart->setTotalPrice($this->productQueryService->getTotalAmountFromProducts($cart->getProducts()->toArray()));
     }
 
     /**

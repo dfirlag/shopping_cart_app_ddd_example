@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Catalog\Domain\Catalog\Persistence;
 
+/**
+ * Interface CatalogModelInterface
+ *
+ * @package App\Catalog\Domain\Catalog\Persistence
+ */
 interface CatalogModelInterface {
 
     /**
@@ -27,7 +32,7 @@ interface CatalogModelInterface {
     public function setName(string $name): void;
 
     /**
-     * @param mixed $products
+     * @param int $productId
      */
     public function addProductId(int $productId): void;
 
@@ -35,6 +40,7 @@ interface CatalogModelInterface {
      * @param array $productIds
      */
     public function setProductIds(array $productIds): void;
+
     /**
      * @return array
      */

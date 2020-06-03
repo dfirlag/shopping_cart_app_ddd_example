@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Product\Infrastructure\Persistence\Mysql;
 
 use App\Product\Domain\Product\Persistence\ProductModel;
@@ -8,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Product\Infrastructure\Persistence\Mysql\Repository\ProductRepository")
+ * @ORM\EntityListeners({"App\Cart\Infrastructure\Persistence\Mysql\Listener\ProductListener"})
  */
 class Product implements ProductModel {
 
@@ -72,7 +75,7 @@ class Product implements ProductModel {
      * @return string
      */
     public function getPrice(): string {
-        return floatval($this->price);
+        return $this->price;
     }
 
     /**

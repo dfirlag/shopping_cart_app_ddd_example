@@ -1,22 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Catalog\Infrastructure\Persistence\Mysql;
 
 use App\Catalog\Domain\Catalog\Persistence\CatalogModelInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\EntityListeners;
-use Doctrine\ORM\Mapping\PostLoad;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
 /**
  * @ORM\Entity(repositoryClass="App\Catalog\Infrastructure\Persistence\Mysql\Repository\CatalogRepository")
- * @EntityListeners({"Product\Infrastructure\Persistence\Mysql\Listener\CatalogListener"})
- * @HasLifecycleCallbacks
+ * @ORM\EntityListeners({"App\Product\Infrastructure\Persistence\Mysql\Listener\CatalogListener"})
  */
 class Catalog implements CatalogModelInterface {
 
@@ -36,10 +30,10 @@ class Catalog implements CatalogModelInterface {
     private $name;
 
     /**
-     * @ManyToMany(targetEntity="App\Product\Infrastructure\Persistence\Mysql\Product")
-     * @JoinTable(name="catalog_product",
-     *      joinColumns={@JoinColumn(name="catalog_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="product_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="App\Product\Infrastructure\Persistence\Mysql\Product")
+     * @ORM\JoinTable(name="catalog_product",
+     *      joinColumns={@ORM\JoinColumn(name="catalog_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
      *      )
      */
     private $products;
@@ -49,19 +43,12 @@ class Catalog implements CatalogModelInterface {
      */
     private $productIds = [];
 
+    /**
+     * Catalog constructor.
+     */
     public function __construct()
     {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /** @PostLoad */
-    public function postLoad()
-    {
-        $this->productIds = [];
-
-        foreach ($this->products->getIterator() as $row) {
-            $this->productIds[] = $row->getId();
-        }
     }
 
     /**
@@ -119,5 +106,12 @@ class Catalog implements CatalogModelInterface {
      */
     public function setProducts(array $products): void {
         $this->products = $products;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getProducts() {
+        return $this->products;
     }
 }

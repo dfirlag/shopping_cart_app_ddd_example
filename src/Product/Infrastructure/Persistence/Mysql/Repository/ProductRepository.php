@@ -1,14 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Product\Infrastructure\Persistence\Mysql\Repository;
 
 use App\Product\Domain\Product\Persistence\Repository\ProductRepositoryInterface;
 use App\Product\Domain\Product\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Product\Infrastructure\Persistence\Mysql\Product as ProductModel;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * Class ProductRepository
+ *
+ * @package App\Product\Infrastructure\Persistence\Mysql\Repository
+ */
 class ProductRepository extends ServiceEntityRepository implements ProductRepositoryInterface {
 
     /**

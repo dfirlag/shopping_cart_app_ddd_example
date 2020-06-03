@@ -1,14 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Catalog\Infrastructure\Persistence\Mysql\Repository;
 
 use App\Catalog\Domain\Catalog\Catalog;
 use App\Catalog\Domain\Catalog\Persistence\Repository\CatalogRepositoryInterface;
-use App\Product\Infrastructure\Persistence\Mysql\Product as ProductModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Catalog\Infrastructure\Persistence\Mysql\Catalog as CatalogModel;
 
+/**
+ * Class CatalogRepository
+ *
+ * @package App\Catalog\Infrastructure\Persistence\Mysql\Repository
+ */
 class CatalogRepository extends ServiceEntityRepository implements CatalogRepositoryInterface {
 
     /**

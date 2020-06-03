@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace App\Product\Domain\Product\ValueObject;
 
 use Money\Currencies\ISOCurrencies;
-use Money\Currency;
 use Money\Money;
 use Money\Parser\DecimalMoneyParser;
 
+/**
+ * Class ProductPrice
+ *
+ * @package App\Product\Domain\Product\ValueObject
+ */
 class ProductPrice {
 
     /**

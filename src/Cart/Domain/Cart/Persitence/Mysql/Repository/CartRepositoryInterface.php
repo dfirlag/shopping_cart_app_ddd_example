@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Cart\Domain\Persitence\Mysql\Repository;
+namespace App\Cart\Domain\Cart\Persitence\Mysql\Repository;
 
 use App\Cart\Domain\Cart\ValueObject\CartUuid;
 
@@ -12,6 +12,12 @@ use App\Cart\Domain\Cart\ValueObject\CartUuid;
  * @package App\Cart\Domain\Persitence\Mysql\Repository
  */
 interface CartRepositoryInterface {
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function find($id);
 
     /**
      * @param CartUuid $cartUuid

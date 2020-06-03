@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace App\Product\Application\CommandHandler;
 
-use App\Product\Application\Command\UpdateProductNameCommand;
 use App\Product\Application\Command\UpdateProductPriceCommand;
 use App\Product\Application\ProductCommandService;
-use App\Product\Domain\Product\ValueObject\ProductId;
-use App\Product\Domain\Product\ValueObject\ProductName;
+use App\Shared\Domain\ValueObject\ProductId;
 use App\Product\Domain\Product\ValueObject\ProductPrice;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class UpdateProductPriceCommandHandler implements MessageHandlerInterface {
+/**
+ * Class UpdateProductPriceCommandHandler
+ *
+ * @package App\Product\Application\CommandHandler
+ */
+final class UpdateProductPriceCommandHandler implements MessageHandlerInterface {
 
     /**
      * @var ProductCommandService

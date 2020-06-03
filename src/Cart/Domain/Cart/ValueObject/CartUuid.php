@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Cart\Domain\Cart\ValueObject;
 
+/**
+ * Class CartUuid
+ *
+ * @package App\Cart\Domain\Cart\ValueObject
+ */
 class CartUuid {
 
     /**

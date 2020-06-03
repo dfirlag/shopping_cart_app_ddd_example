@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace App\Cart\UserInterface\Http;
 
 use App\Cart\Application\CartCommandService;
+use App\Cart\Application\Command\AddProductToCartCommand;
 use App\Cart\Application\Command\CreateEmptyCartCommand;
+use App\Cart\Application\Command\RemoveProductFromCartCommand;
+use App\Catalog\Domain\Catalog\Exception\CatalogNotFoundException;
 use App\Shared\UserInterface\Http\AbstractController;
-use Cart\Application\Dto\CartIdDto;
+use App\Cart\Application\Dto\CartIdDto;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,15 +63,47 @@ class CartCommandController extends AbstractController {
         return $response;
     }
 
-    public function addProductToCart(): void
+    /**
+     * @Route("/addProduct/{cartId}", methods={"POST"})
+     */
+    public function addProductToCart($cartId, Request $request): Response
     {
+        $productId = (int)$request->get('productId', 0);
 
+        if (empty($productId)) {
+            return $this->getErrorJsonResponse("Product id is missing");
+        }
+
+        $command = new AddProductToCartCommand($cartId, $productId);
+
+        try {
+            $this->bus->dispatch($command);
+        } catch (CatalogNotFoundException $e) {
+            return $this->getErrorJsonResponse("Catalog not found");
+        }
+
+        return $this->getOkJsonResponse();
     }
 
-    public function removeProductFromCart(): void
+    /**
+     * @Route("/removeProduct/{cartId}", methods={"POST"})
+     */
+    public function removeProductFromCart($cartId, Request $request): Response
     {
+        $productId = (int)$request->get('productId', 0);
 
+        if (empty($productId)) {
+            return $this->getErrorJsonResponse("Product id is missing");
+        }
+
+        $command = new RemoveProductFromCartCommand((string)$cartId, $productId);
+
+        try {
+            $this->bus->dispatch($command);
+        } catch (CatalogNotFoundException $e) {
+            return $this->getErrorJsonResponse("Catalog not found");
+        }
+
+        return $this->getOkJsonResponse();
     }
-
-
 }

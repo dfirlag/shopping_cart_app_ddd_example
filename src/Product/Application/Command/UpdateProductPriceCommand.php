@@ -1,10 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Product\Application\Command;
 
 use App\Shared\Application\Command\CommandInterface;
 use Money\Money;
 
+/**
+ * Class UpdateProductPriceCommand
+ *
+ * @package App\Product\Application\Command
+ */
 final class UpdateProductPriceCommand implements CommandInterface  {
     /**
      * @var int

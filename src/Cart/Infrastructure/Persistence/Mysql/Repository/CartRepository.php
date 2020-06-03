@@ -1,17 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Cart\Infrastructure\Persistence\Mysql\Repository;
 
-use App\Cart\Domain\Persitence\Mysql\Repository\CartRepositoryInterface;
+use App\Cart\Domain\Cart\Cart;
+use App\Cart\Domain\Cart\Persitence\Mysql\Repository\CartRepositoryInterface;
 use App\Cart\Domain\Cart\ValueObject\CartUuid;
 use App\Cart\Infrastructure\Persistence\Mysql\Cart as CartModel;
-use App\Catalog\Domain\Catalog\Catalog;
-use App\Catalog\Domain\Catalog\Persistence\Repository\CatalogRepositoryInterface;
-use App\Product\Infrastructure\Persistence\Mysql\Product as ProductModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Catalog\Infrastructure\Persistence\Mysql\Catalog as CatalogModel;
 
+/**
+ * Class CartRepository
+ *
+ * @package App\Cart\Infrastructure\Persistence\Mysql\Repository
+ */
 class CartRepository extends ServiceEntityRepository implements CartRepositoryInterface {
 
     /**
@@ -36,25 +40,22 @@ class CartRepository extends ServiceEntityRepository implements CartRepositoryIn
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * @param Cart $cart
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveCart(Cart $cart): void
+    {
+        if ($cart->getCartUuid() !== null) {
+            $cartModel = $this->find($cart->getCartUuid()->getUuid());
+        } else {
+            $cartModel = new CartModel();
+        }
 
+        $cartModel->setProductIds($cart->getProductCollection()->toArray());
 
-    //    /**
-//     * @param Catalog $catalog
-//     * @throws \Doctrine\ORM\ORMException
-//     * @throws \Doctrine\ORM\OptimisticLockException
-//     */
-//    public function saveCart(Cart $catalog): void
-//    {
-//        if ($catalog->getCatalogId() !== null) {
-//            $catalogModel = $this->find($catalog->getCatalogId()->getId());
-//        } else {
-//            $catalogModel = new CatalogModel();
-//        }
-//
-//        $catalogModel->setName($catalog->getCatalogName()->getName());
-//        $catalogModel->setProductIds($catalog->getProductCollection()->toArray());
-//
-//        $this->getEntityManager()->persist($catalogModel);
-//        $this->getEntityManager()->flush();
-//    }
+        $this->getEntityManager()->persist($cartModel);
+        $this->getEntityManager()->flush();
+    }
 }

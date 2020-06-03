@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Catalog\Domain\Catalog\ValueObject;
 
+/**
+ * Class CatalogName
+ *
+ * @package App\Catalog\Domain\Catalog\ValueObject
+ */
 class CatalogName {
 
     /**

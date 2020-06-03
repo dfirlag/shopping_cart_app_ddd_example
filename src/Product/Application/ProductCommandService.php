@@ -1,21 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Product\Application;
 
 use App\Product\Domain\Product\Exception\InvalidProductPriceException;
 use App\Product\Domain\Product\Exception\ProductNotFoundException;
 use App\Product\Domain\Product\Factory\ProductFactory;
-use App\Product\Domain\Product\ValueObject\ProductId;
+use App\Shared\Domain\ValueObject\ProductId;
 use App\Product\Domain\Product\ValueObject\ProductName;
 use App\Product\Domain\Product\ValueObject\ProductPrice;
 use App\Product\Infrastructure\Persistence\Mysql\Repository\ProductRepository;
-use App\Shared\Application\MoneyHelperService;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ObjectRepository;
-use Money\Currencies\ISOCurrencies;
-use Money\Money;
-use Money\Parser\DecimalMoneyParser;
 
+/**
+ * Class ProductCommandService
+ *
+ * @package App\Product\Application
+ */
 class ProductCommandService {
 
     /**

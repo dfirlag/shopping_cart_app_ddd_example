@@ -6,7 +6,12 @@ namespace App\Catalog\Application\Command;
 
 use App\Shared\Application\Command\CommandInterface;
 
-class AddProductToCatalogCommand implements CommandInterface {
+/**
+ * Class AddProductToCatalogCommand
+ *
+ * @package App\Catalog\Application\Command
+ */
+final class AddProductToCatalogCommand implements CommandInterface {
 
     /**
      * @var int

@@ -6,7 +6,6 @@ namespace App\Catalog\UserInterface\Http;
 
 use App\Catalog\Application\Command\AddProductToCatalogCommand;
 use App\Catalog\Application\Command\RemoveProductFromCatalogCommand;
-use App\Product\Application\Command\UpdateProductNameCommand;
 use App\Product\Domain\Product\Exception\ProductNotFoundException;
 use App\Shared\UserInterface\Http\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

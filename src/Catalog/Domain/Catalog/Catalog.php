@@ -6,8 +6,13 @@ namespace App\Catalog\Domain\Catalog;
 
 use App\Catalog\Domain\Catalog\ValueObject\CatalogId;
 use App\Catalog\Domain\Catalog\ValueObject\CatalogName;
-use App\Catalog\Domain\Catalog\ValueObject\ProductCollection;
+use App\Shared\Domain\ValueObject\ProductCollection;
 
+/**
+ * Class Catalog
+ *
+ * @package App\Catalog\Domain\Catalog
+ */
 class Catalog {
 
     /**

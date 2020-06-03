@@ -22,9 +22,22 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Catalog/Infrastructure/Persistence/Mysql'
                 prefix: 'App\Catalog\Infrastructure\Persistence\Mysql'
                 alias: App
+            App/CatalogReadModel:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Catalog/Infrastructure/Persistence/Mysql'
+                prefix: 'App\Catalog\Infrastructure\Persistence\Mysql'
+                alias: App
+            App/CartReadModel:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Cart/Infrastructure/Persistence/Mysql'
+                prefix: 'App\Cart\Infrastructure\Persistence\Mysql'
+                alias: App
             App/Cart:
                 is_bundle: false
                 type: annotation
                 dir: '%kernel.project_dir%/src/Cart/Infrastructure/Persistence/Mysql'
                 prefix: 'App\Cart\Infrastructure\Persistence\Mysql'
                 alias: App
+

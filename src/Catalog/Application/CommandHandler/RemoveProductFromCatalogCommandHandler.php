@@ -7,10 +7,15 @@ namespace App\Catalog\Application\CommandHandler;
 use App\Catalog\Application\CatalogCommandService;
 use App\Catalog\Application\Command\RemoveProductFromCatalogCommand;
 use App\Catalog\Domain\Catalog\ValueObject\CatalogId;
-use App\Catalog\Domain\Catalog\ValueObject\ProductId;
+use App\Shared\Domain\ValueObject\ProductId;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class RemoveProductFromCatalogCommandHandler implements MessageHandlerInterface {
+/**
+ * Class RemoveProductFromCatalogCommandHandler
+ *
+ * @package App\Catalog\Application\CommandHandler
+ */
+final class RemoveProductFromCatalogCommandHandler implements MessageHandlerInterface {
 
     /**
      * @var CatalogCommandService

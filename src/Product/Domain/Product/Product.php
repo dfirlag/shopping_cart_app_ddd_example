@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Product\Domain\Product;
 
 use App\Product\Domain\Product\ValueObject\ProductPrice;
-use App\Product\Domain\Product\ValueObject\ProductId;
+use App\Shared\Domain\ValueObject\ProductId;
 use App\Product\Domain\Product\ValueObject\ProductName;
 
 class Product {

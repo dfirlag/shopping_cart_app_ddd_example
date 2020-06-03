@@ -1,24 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Cart\Infrastructure\Persistence\Mysql;
 
 use App\Cart\Domain\Cart\Persitence\Mysql\CartModelInterface;
-use App\Catalog\Domain\Catalog\Persistence\CatalogModelInterface;
 use Money\Money;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\EntityListeners;
-use Doctrine\ORM\Mapping\PostLoad;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
 /**
  * @ORM\Entity(repositoryClass="App\Cart\Infrastructure\Persistence\Mysql\Repository\CartRepository")
- * @EntityListeners({"Product\Infrastructure\Persistence\Mysql\Listener\CartListener"})
- * @HasLifecycleCallbacks
+ * @ORM\EntityListeners({"App\Product\Infrastructure\Persistence\Mysql\Listener\CartListener"})
+ * @ORM\HasLifecycleCallbacks
  */
 class Cart implements CartModelInterface {
 
@@ -31,10 +25,10 @@ class Cart implements CartModelInterface {
     private $id;
 
     /**
-     * @ManyToMany(targetEntity="App\Product\Infrastructure\Persistence\Mysql\Product")
-     * @JoinTable(name="cart_product",
-     *      joinColumns={@JoinColumn(name="cart_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="product_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="App\Product\Infrastructure\Persistence\Mysql\Product")
+     * @ORM\JoinTable(name="cart_product",
+     *      joinColumns={@ORM\JoinColumn(name="cart_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
      *      )
      */
     private $products;
@@ -54,21 +48,11 @@ class Cart implements CartModelInterface {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /** @PostLoad */
-    public function postLoad()
-    {
-        $this->productIds = [];
-
-        foreach ($this->products->getIterator() as $row) {
-            $this->productIds[] = $row->getId();
-        }
-    }
-
     /**
      * @return string
      */
     public function getId(): string {
-        return $this->id;
+        return (string)$this->id;
     }
 
     /**
@@ -104,6 +88,13 @@ class Cart implements CartModelInterface {
      */
     public function setProducts(array $products): void {
         $this->products = $products;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getProducts() {
+        return $this->products;
     }
 
     /**

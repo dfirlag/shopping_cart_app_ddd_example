@@ -2,17 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\Catalog\Domain\Catalog\ValueObject;
+namespace App\Shared\Domain\ValueObject;
 
+/**
+ * Class ProductCollection
+ *
+ * @package App\Shared\Domain\ValueObject
+ */
 class ProductCollection {
 
     /**
      * @var array
      */
-    private $productIds = [];
+    protected $productIds = [];
 
+    /**
+     * @param array $productIds
+     * @return ProductCollection
+     */
     public static function createFromArray(array $productIds): ProductCollection {
-        $instance = new self();
+        $instance = new static();
         $instance->productIds = $productIds;
         return $instance;
     }
@@ -33,7 +42,17 @@ class ProductCollection {
         }
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array {
         return array_keys($this->productIds);
+    }
+
+    /**
+     * @return int
+     */
+    public function count(): int {
+        return count($this->productIds);
     }
 }

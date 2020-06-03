@@ -6,6 +6,11 @@ namespace App\Product\Application\Command;
 
 use App\Shared\Application\Command\CommandInterface;
 
+/**
+ * Class UpdateProductNameCommand
+ *
+ * @package App\Product\Application\Command
+ */
 final class UpdateProductNameCommand implements CommandInterface {
 
     /**

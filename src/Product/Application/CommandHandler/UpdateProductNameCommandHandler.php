@@ -6,11 +6,16 @@ namespace App\Product\Application\CommandHandler;
 
 use App\Product\Application\Command\UpdateProductNameCommand;
 use App\Product\Application\ProductCommandService;
-use App\Product\Domain\Product\ValueObject\ProductId;
+use App\Shared\Domain\ValueObject\ProductId;
 use App\Product\Domain\Product\ValueObject\ProductName;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class UpdateProductNameCommandHandler implements MessageHandlerInterface {
+/**
+ * Class UpdateProductNameCommandHandler
+ *
+ * @package App\Product\Application\CommandHandler
+ */
+final class UpdateProductNameCommandHandler implements MessageHandlerInterface {
 
     /**
      * @var ProductCommandService

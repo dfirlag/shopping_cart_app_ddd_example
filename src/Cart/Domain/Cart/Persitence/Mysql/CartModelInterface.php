@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace App\Cart\Domain\Cart\Persitence\Mysql;
 
+use Money\Money;
+
+/**
+ * Interface CartModelInterface
+ *
+ * @package App\Cart\Domain\Cart\Persitence\Mysql
+ */
 interface CartModelInterface {
 
     /**
@@ -35,4 +42,9 @@ interface CartModelInterface {
      * @param array $products
      */
     public function setProducts(array $products): void;
+
+    /**
+     * @return Money
+     */
+    public function getTotalPrice(): Money;
 }

@@ -1,8 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Cart\Application\Command;
 
-class CreateEmptyCartCommand {
+use App\Shared\Application\Command\CommandInterface;
+
+/**
+ * Class CreateEmptyCartCommand
+ *
+ * @package App\Cart\Application\Command
+ */
+final class CreateEmptyCartCommand implements CommandInterface {
 
     /**
      * @var string

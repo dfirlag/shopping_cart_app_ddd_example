@@ -3,9 +3,15 @@
 declare(strict_types=1);
 
 namespace App\Catalog\Application\Command;
+
 use App\Shared\Application\Command\CommandInterface;
 
-class RemoveProductFromCatalogCommand implements CommandInterface {
+/**
+ * Class RemoveProductFromCatalogCommand
+ *
+ * @package App\Catalog\Application\Command
+ */
+final class RemoveProductFromCatalogCommand implements CommandInterface {
 
     /**
      * @var int
